@@ -1,0 +1,51 @@
+{
+  "auth": {
+    "http_auth_enabled": true,
+    "username": "new_username",
+    "password": "new_password"
+  },
+  "api": {
+    "http": {
+      "host": "127.0.0.1",
+      "port": 47334
+    },
+    "mysql": {
+      "host": "127.0.0.1",
+      "port": 47335
+    }
+  },
+  "paths": {
+    "root": "~/.mindsdb/var",
+    "static": "./mindsdb/studio"
+  },
+  "logs": {
+    "level": {
+      "console": "INFO",
+      "file": "DEBUG"
+    }
+  },
+  "gui": {
+    "autoupdate": true,
+    "open_on_start": true
+  },
+  "environment_variables": {
+    "MINDSDB_CONFIG_PATH": "/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/config.json",
+    "MINDSDB_STORAGE_DIR": "/Users/clifforddalsoniii/.mindsdb/var",
+    "MINDSDB_DB_CON": "postgresql://postgres.eawhngbgscalpjagxmvs:qpKep&As!MQRtX5jXy!!ibqN5S5@aws-1-us-east-1.pooler.supabase.com:5432/postgres?schema=mindsdb_database_con",
+    "MINDSDB_APIS": "http,mysql",
+    "MINDSDB_LOG_LEVEL": "DEBUG",
+    "MINDSDB_DEFAULT_PROJECT": "mindsdb",
+    "USE_PIDFILE": 0,
+    "MINDSDB_GUI_AUTOUPDATE": true,
+    "MINDSDB_NO_STUDIO": false,
+    "DEBUG": true
+  },
+
+  "database": {
+    "connection_string": "postgresql://postgres.eawhngbgscalpjagxmvs:qpKep&As!MQRtX5jXy!!ibqN5S5@aws-1-us-east-1.pooler.supabase.com:5432/postgres?schema=mindsdb_database_conn_str"
+  },
+  "development": {
+    "debug": true,
+    "use_pidfile": false
+  }
+}

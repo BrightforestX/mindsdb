@@ -1,0 +1,41 @@
+---
+description: "Always consider and document edge cases and boundary conditions"
+alwaysApply: true
+---
+
+# Edge Cases and Boundary Conditions
+
+Always consider and document edge cases and boundaries. Add tests and `.feature` scenarios where relevant.
+
+## Required Checks
+
+- **Empty values**: Empty string `""`, empty dict `{}`, empty list `[]`, `None`
+- **Null/undefined**: `None`, missing required fields, optional parameters
+- **Oversized inputs**: Large datasets (>1M rows), large model files, memory limits
+- **Unicode**: Emoji, special characters, RTL text, zero-width characters in data
+- **Invalid IDs**: Malformed UUIDs, negative numbers, non-existent model/datasource IDs
+- **Boundary values**: Zero, negative, MAX_INT, empty collections, None vs empty string
+- **Type mismatches**: String where int expected, dict where DataFrame expected, wrong data types
+- **ML-specific**: Invalid model parameters, incompatible data schemas, NaN/Inf values
+
+## Validation Strategy
+
+- **Prefer allowlists** over blocklists
+- **Explicit validation** using Pydantic or custom validators
+- **Fail fast** with clear error messages
+- **Sanitize inputs** before ML model processing
+
+## Testing Requirements
+
+- Add pytest unit tests for edge cases
+- Add `.feature` scenarios for boundary conditions
+- Test error paths, not just happy paths
+- Use property-based testing (Hypothesis) for data validation
+- Test with real-world edge cases (missing data, outliers, imbalanced datasets)
+
+## Examples
+
+- ML models: Test with empty datasets, single-row datasets, all-NaN columns
+- Database queries: Test with invalid SQL, SQL injection attempts, very large result sets
+- API endpoints: Test with `None`, empty dict, 10MB payload, malformed JSON
+- Data processing: Test with mixed types, timezone issues, date parsing edge cases

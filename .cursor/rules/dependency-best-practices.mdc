@@ -1,0 +1,58 @@
+---
+description: "Search the web for current best practices before adding or upgrading dependencies"
+alwaysApply: true
+---
+
+# Dependency Best Practices
+
+Before adding or upgrading dependencies, **search the web** for current best practices using authoritative sources.
+
+## Required Research
+
+1. **Security**: Check for known vulnerabilities (`pip audit`, `safety check`)
+2. **Maintenance**: Verify package is actively maintained (PyPI, GitHub activity, recent releases)
+3. **Alternatives**: Compare with similar packages (performance, community, license)
+4. **Best practices**: Review official docs, OWASP guides, Python security best practices
+
+## Lockfile Management
+
+- **Always commit lockfiles**: `requirements.txt`, `requirements-dev.txt`, `Pipfile.lock`
+- **Use `pip install --no-deps`** for testing dependency conflicts
+- **Pin critical dependencies**: ML libraries (pandas, numpy, scikit-learn) should use compatible versions
+- **Never commit** virtual environments (`venv/`, `.venv/`, `__pycache__/`)
+
+## Versioning Strategy
+
+- **Semantic versioning**: Understand `>=`, `~=`, exact versions
+- **Pin ML dependencies**: NumPy, pandas, scikit-learn compatibility is critical
+- **Regular updates**: Schedule dependency updates, use Dependabot/Renovate
+- **Test compatibility**: Test NumPy version conflicts (1.x vs 2.x), pandas compatibility
+
+## Supply Chain Security
+
+- **Least privilege**: Only install what's needed
+- **Audit regularly**: Run `pip audit` / `safety check` in CI
+- **Verify sources**: Use official PyPI, verify package signatures
+- **Monitor advisories**: Subscribe to security advisories for critical dependencies
+- **Virtual environments**: Always use virtual environments, never install globally
+
+## Python-Specific Considerations
+
+- **Python version**: Ensure compatibility with project's Python version requirements
+- **NumPy conflicts**: Be aware of NumPy 1.x vs 2.x compatibility issues with ML libraries
+- **ML library compatibility**: Verify compatibility between pandas, numpy, scikit-learn versions
+- **Platform-specific**: Test on Linux (production) even if developing on macOS
+
+## ML-Specific Dependencies
+
+- **Model libraries**: Verify compatibility of ML model libraries (LightGBM, XGBoost, etc.)
+- **Data processing**: Ensure pandas/numpy versions are compatible with data processing needs
+- **GPU support**: If using GPU, verify CUDA/cuDNN compatibility
+
+## Authoritative Sources
+
+- Official package documentation (pandas, numpy, scikit-learn, MindsDB)
+- OWASP Python security guide
+- PyPI security advisories
+- Python Packaging User Guide
+- ML library compatibility matrices

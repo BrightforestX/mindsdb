@@ -30,3 +30,10 @@ ignore = [
 "mindsdb/api/http/start.py" = ["E402"]
 "mindsdb/api/mysql/mysql_proxy/libs/constants/mysql.py" = ["E241"]
 "mindsdb/integrations/handlers/lightwood_handler/tests/test_lightwood_handler.py" = ["E402"]
+
+[tool.pytest.ini_options]
+# pytest-bdd-ng configuration
+bdd_features_base_dir = "tests/bdd/features"
+bdd_steps_base_dir = "tests/bdd/step_defs"
+# JSON report for roadmap generation
+addopts = "--json-report --json-report-file=reports/pytest-bdd-report.json"

@@ -1,0 +1,72 @@
+services:
+  mindsdb:
+    # Build from local Dockerfile (uncomment to use)
+    # build:
+    #   context: .
+    #   dockerfile: docker/mindsdb.Dockerfile
+    #   target: extras
+    
+    # Or use pre-built image
+    image: mindsdb/mindsdb:latest
+    
+    container_name: mindsdb-custom
+    restart: unless-stopped
+    
+    # Load environment variables from file
+    # Defaults to env/dev.env if ENV_FILE is not set
+    # Usage: ENV_FILE=env/supabase.env docker-compose -f docker-compose.custom.yml up
+    env_file:
+      - ${ENV_FILE:-env/dev.env}
+    
+    ports:
+      - "47334:47334"  # HTTP API
+      - "47335:47335"  # MySQL API
+    
+    environment:
+      # REQUIRED: Remote PostgreSQL connection string for internal storage
+      # Example for Supabase:
+      # postgresql://postgres:password@db.project.supabase.co:5432/postgres?sslmode=require
+      MINDSDB_DB_CON: ${MINDSDB_DB_CON:-}
+      
+      # Custom config file path (optional)
+      # If set, mount the config file as a volume below
+      MINDSDB_CONFIG_PATH: ${MINDSDB_CONFIG_PATH:-/root/mindsdb_config.json}
+      
+      # Enable all APIs
+      MINDSDB_APIS: http,mysql,jobs,tasks,ml_task_queue,litellm
+      
+      # Docker environment
+      MINDSDB_DOCKER_ENV: "True"
+      
+      # Optional: Custom storage directory
+      MINDSDB_STORAGE_DIR: ${MINDSDB_STORAGE_DIR:-/mindsdb/var}
+      
+      # Optional: Logging level
+      MINDSDB_LOG_LEVEL: ${MINDSDB_LOG_LEVEL:-INFO}
+      
+      # Optional: HTTP Authentication
+      MINDSDB_USERNAME: ${MINDSDB_USERNAME:-}
+      MINDSDB_PASSWORD: ${MINDSDB_PASSWORD:-}
+      
+      # Optional: Default project name
+      MINDSDB_DEFAULT_PROJECT: ${MINDSDB_DEFAULT_PROJECT:-mindsdb}
+    
+    volumes:
+      # Mount custom config file if MINDSDB_CONFIG_PATH is set to a host path
+      # Uncomment and adjust path if using custom config:
+      # - ${MINDSDB_CONFIG_PATH}:/root/mindsdb_config.json:ro
+      
+      # Optional: Mount storage directory for persistence
+      # - ./mindsdb_storage:/mindsdb/var
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:47334/api/util/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    
+    # Remove depends_on if using remote database (not local postgres)
+    # depends_on:
+    #   postgres:
+    #     condition: service_healthy

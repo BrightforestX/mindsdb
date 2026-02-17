@@ -1,0 +1,42 @@
+---
+description: "Proactively suggest updates to Cursor-related files when introducing new patterns or domains"
+alwaysApply: true
+---
+
+# Cursor Files and Rules Suggestions
+
+When introducing new patterns, conventions, or domains, **proactively suggest** updates to Cursor-related files.
+
+## When to Suggest
+
+- New ML model patterns (e.g., new model type, new training approach)
+- New database integration patterns (e.g., new datasource connector)
+- New testing strategies (e.g., new BDD patterns, property-based testing for ML)
+- Domain-specific conventions (e.g., model naming, prediction format)
+
+## What to Suggest
+
+1. **New rules** in `.cursor/rules/`:
+   - Rule title and one-sentence purpose
+   - Whether to use `alwaysApply: true` or `globs: "**/*.py"`
+   - Brief description of the pattern/convention
+
+2. **Plan updates** in `.cursor/plans/`:
+   - For larger initiatives or multi-step features
+   - Include todos, dependencies, acceptance criteria
+
+3. **AGENTS.md updates**:
+   - If the project uses `AGENTS.md`, suggest updates for new agent patterns
+   - Document new subagents or specialized workflows
+
+## Format
+
+Keep suggestions concrete and actionable:
+- "Add rule: `ml-model-patterns.mdc` with `globs: '**/models/**/*.py'` to enforce ML model conventions"
+- "Update plan: `datasource-integration.plan.md` to include new BDD scenarios for edge cases"
+
+## Examples
+
+- Adding a new ML model type → Suggest `ml-model-conventions.mdc` rule
+- Introducing new datasource connector → Suggest updating integration patterns
+- New prediction format → Suggest updating API design rule

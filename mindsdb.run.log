@@ -1,0 +1,103 @@
+[39;20m2025-11-11 15:36:11,086     MainProcess INFO     alembic.runtime.migration: Context impl SQLiteImpl.[0m
+[39;20m2025-11-11 15:36:11,086     MainProcess INFO     alembic.runtime.migration: Will assume non-transactional DDL.[0m
+[39;20m2025-11-11 15:36:11,112     MainProcess INFO     mindsdb: Version: 25.3.2.0[0m
+[39;20m2025-11-11 15:36:11,112     MainProcess INFO     mindsdb: Configuration file: config.json[0m
+[39;20m2025-11-11 15:36:11,112     MainProcess INFO     mindsdb: Storage path: /Users/clifforddalsoniii/.mindsdb/var[0m
+[39;20m2025-11-11 15:36:11,116     MainProcess INFO     mindsdb: http API: starting...[0m
+[39;20m2025-11-11 15:36:11,128     MainProcess INFO     mindsdb: mysql API: starting...[0m
+[39;20m2025-11-11 15:36:11,131     MainProcess INFO     mindsdb: jobs API: starting...[0m
+[39;20m2025-11-11 15:36:11,134     MainProcess INFO     mindsdb: tasks API: starting...[0m
+[39;20m2025-11-11 15:36:12,169            jobs INFO     mindsdb.interfaces.jobs.scheduler: Jobs API is starting..[0m
+[39;20m2025-11-11 15:36:12,184            jobs INFO     mindsdb.interfaces.jobs.scheduler: Scheduler starts[0m
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_name" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_name" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_name" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+[39;20m2025-11-11 15:36:14,449           mysql INFO     mindsdb.api.mysql.start: MySQL API is starting..[0m
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_name" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/opentelemetry/instrumentation/dependencies.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import (
+[39;20m2025-11-11 15:36:16,451           mysql INFO     mindsdb.api.mysql.mysql_proxy.mysql_proxy: Starting MindsDB Mysql proxy server on tcp://127.0.0.1:47335[0m
+[39;20m2025-11-11 15:36:16,451           mysql INFO     mindsdb.api.mysql.mysql_proxy.mysql_proxy: Waiting for incoming connections...[0m
+[39;20m2025-11-11 15:36:16,652     MainProcess INFO     mindsdb: mysql API: started on 47335[0m
+[39;20m2025-11-11 15:36:17,108            http INFO     mindsdb.metrics.server: PROMETHEUS_MULTIPROC_DIR environment variable is not set. Metrics server won't be started.[0m
+[39;20m2025-11-11 15:36:17,109            http INFO     mindsdb.api.http.initialize:  - GUI available at http://127.0.0.1:47334/[0m
+[39;20m2025-11-11 15:36:17,654     MainProcess INFO     mindsdb: http API: started on 47334[0m
+[39;20m2025-11-11 15:59:10,429            http INFO     mindsdb.integrations.handlers.github_handler.github_handler: Authenticated as user Brightforest[0m
+[39;20m2025-11-11 15:59:10,757            http INFO     mindsdb.integrations.handlers.github_handler.github_handler: Current rate limit: RateLimitOverview(rate=Rate(reset=2025-11-11 21:02:34+00:00, remaining=4994, limit=5000))[0m
+[39;20m2025-11-11 16:26:21,933            http INFO     lightwood-55440: No torchvision detected, image helpers not supported.[0m
+[39;20m2025-11-11 16:26:21,934            http INFO     lightwood-55440: No torchvision/pillow detected, image encoder not supported[0m
+[33;20m2025-11-11 17:58:18,467     MainProcess WARNING  mindsdb: http API: stopped unexpectedly, restarting[0m
+[39;20m2025-11-11 17:58:18,468     MainProcess INFO     mindsdb: http API: starting...[0m
+[33;20m2025-11-11 17:58:18,471     MainProcess WARNING  mindsdb: mysql API: stopped unexpectedly, restarting[0m
+[39;20m2025-11-11 17:58:18,471     MainProcess INFO     mindsdb: mysql API: starting...[0m
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_name" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_name" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+[39;20m2025-11-11 17:58:23,606           mysql INFO     mindsdb.api.mysql.start: MySQL API is starting..[0m
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_name" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/opentelemetry/instrumentation/dependencies.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import (
+[39;20m2025-11-11 17:58:25,601           mysql INFO     mindsdb.api.mysql.mysql_proxy.mysql_proxy: Starting MindsDB Mysql proxy server on tcp://127.0.0.1:47335[0m
+Process mysql:
+Traceback (most recent call last):
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/./mindsdb/utilities/starters.py", line 8, in start_mysql
+    start(*args, **kwargs)
+  File "/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/./mindsdb/api/mysql/start.py", line 13, in start
+    MysqlProxy.startProxy()
+  File "/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/./mindsdb/api/mysql/mysql_proxy/mysql_proxy.py", line 926, in startProxy
+    server = SocketServer.ThreadingTCPServer((host, port), MysqlProxy)
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socketserver.py", line 452, in __init__
+    self.server_bind()
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socketserver.py", line 466, in server_bind
+    self.socket.bind(self.server_address)
+OSError: [Errno 48] Address already in use
+[39;20m2025-11-11 17:58:27,288            http INFO     mindsdb.metrics.server: PROMETHEUS_MULTIPROC_DIR environment variable is not set. Metrics server won't be started.[0m
+Process http:
+Traceback (most recent call last):
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/./mindsdb/utilities/starters.py", line 3, in start_http
+    start(*args, **kwargs)
+  File "/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/./mindsdb/api/http/start.py", line 30, in start
+    serve(
+  File "/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/waitress/__init__.py", line 13, in serve
+    server = _server(app, **kw)
+  File "/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/waitress/server.py", line 78, in create_server
+    last_serv = TcpWSGIServer(
+  File "/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/waitress/server.py", line 243, in __init__
+    self.bind_server_socket()
+  File "/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/waitress/server.py", line 364, in bind_server_socket
+    self.bind(sockaddr)
+  File "/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/waitress/wasyncore.py", line 374, in bind
+    return self.socket.bind(addr)
+OSError: [Errno 48] Address already in use
+[31;20m2025-11-11 17:59:18,538     MainProcess ERROR    mindsdb: ERROR: http API cant start on 47334[0m
+[39;20m2025-11-11 17:59:18,538     MainProcess INFO     mindsdb: http API: stopped[0m
+[31;20m2025-11-11 17:59:18,539     MainProcess ERROR    mindsdb: ERROR: mysql API cant start on 47335[0m
+[39;20m2025-11-11 17:59:18,539     MainProcess INFO     mindsdb: mysql API: stopped[0m

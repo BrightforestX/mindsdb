@@ -1,0 +1,72 @@
+---
+description: "Apply high standards from architecture, DevOps, and senior development practices"
+alwaysApply: true
+---
+
+# Architect / DevOps / Senior-Dev Discipline
+
+Apply high standards from architecture, DevOps, and senior development practices.
+
+## Observability & Logging
+
+- **Structured logging**: Use Python `logging` module with structured formats
+- **Log levels**: Appropriate use of DEBUG, INFO, WARN, ERROR
+- **Context**: Include model IDs, datasource IDs, prediction IDs, correlation IDs
+- **Sensitive data**: Never log user data, model weights, API keys
+- **Failure modes**: Log failures with stack traces, input sanitization
+
+## Security
+
+- **Secure defaults**: Fail secure, deny by default
+- **Input validation**: Validate all inputs (data, model parameters, API requests)
+- **Authentication/Authorization**: Verify API tokens, database credentials
+- **Secrets management**: Use environment variables, secret managers, never hardcode
+- **HTTPS**: Always use HTTPS for API calls, validate SSL certificates
+
+## Reliability
+
+- **Idempotency**: Make model training/prediction operations idempotent where possible
+- **Retries**: Implement retries with exponential backoff for database/API calls
+- **Timeouts**: Set appropriate timeouts for model training, predictions, database queries
+- **Circuit breakers**: Consider circuit breakers for external dependencies
+- **Graceful degradation**: Handle model failures gracefully, provide fallbacks
+
+## API Design
+
+- **Versioning**: Plan for API versioning, model versioning
+- **Error responses**: Consistent error format with codes, messages, details
+- **Rate limiting**: Consider rate limits for prediction endpoints
+- **Documentation**: Keep API docs up to date (OpenAPI/Swagger)
+- **Backward compatibility**: Maintain backward compatibility for model APIs
+
+## Testing
+
+- **Unit tests**: Test individual functions, model components in isolation
+- **Integration tests**: Test database integration, model training pipelines
+- **E2E tests**: Test critical flows (BDD features with Behave)
+- **Property-based tests**: Use Hypothesis for data validation, model input validation
+- **Test coverage**: Aim for meaningful coverage, especially for ML model logic
+
+## Infrastructure & Deployment
+
+- **Infrastructure as Code**: Use Docker, Kubernetes, or similar
+- **Deployment safety**: Test deployments in staging before production
+- **Rollback plans**: Always have a rollback strategy for model deployments
+- **Health checks**: Implement health check endpoints
+- **Monitoring**: Set up alerts for model training failures, prediction errors
+
+## Performance & Capacity
+
+- **Performance budgets**: Monitor model training time, prediction latency
+- **Capacity planning**: Understand memory limits for large models, datasets
+- **Caching**: Use caching for model predictions, datasource queries
+- **Database optimization**: Optimize queries, avoid N+1 patterns
+- **Load testing**: Test ML endpoints under expected load
+
+## ML-Specific Best Practices
+
+- **Model versioning**: Track model versions, maintain model registry
+- **Data validation**: Validate input data schemas, handle missing data
+- **Model evaluation**: Track model performance metrics, A/B testing
+- **Resource management**: Monitor GPU/CPU usage, memory consumption
+- **Reproducibility**: Ensure model training is reproducible (seed values, version pinning)

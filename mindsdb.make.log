@@ -1,0 +1,40 @@
+python -m mindsdb --config="./config.json"
+[39;20m2025-11-10 22:59:02,102     MainProcess INFO     alembic.runtime.migration: Context impl SQLiteImpl.[0m
+[39;20m2025-11-10 22:59:02,103     MainProcess INFO     alembic.runtime.migration: Will assume non-transactional DDL.[0m
+[39;20m2025-11-10 22:59:02,131     MainProcess INFO     mindsdb: Version: 25.3.2.0[0m
+[39;20m2025-11-10 22:59:02,131     MainProcess INFO     mindsdb: Configuration file: config.json[0m
+[39;20m2025-11-10 22:59:02,131     MainProcess INFO     mindsdb: Storage path: /Users/clifforddalsoniii/.mindsdb/var[0m
+[39;20m2025-11-10 22:59:02,137     MainProcess INFO     mindsdb: http API: starting...[0m
+[39;20m2025-11-10 22:59:02,147     MainProcess INFO     mindsdb: mysql API: starting...[0m
+[39;20m2025-11-10 22:59:02,149     MainProcess INFO     mindsdb: jobs API: starting...[0m
+[39;20m2025-11-10 22:59:02,152     MainProcess INFO     mindsdb: tasks API: starting...[0m
+[39;20m2025-11-10 22:59:03,306            jobs INFO     mindsdb.interfaces.jobs.scheduler: Jobs API is starting..[0m
+[39;20m2025-11-10 22:59:03,318            jobs INFO     mindsdb.interfaces.jobs.scheduler: Scheduler starts[0m
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_name" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_name" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_name" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+[39;20m2025-11-10 22:59:06,085           mysql INFO     mindsdb.api.mysql.start: MySQL API is starting..[0m
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_name" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+/Users/clifforddalsoniii/Documents/Brightforest/projects/development/active/ml/mindsdb/mindsdb-venv/lib/python3.9/site-packages/opentelemetry/instrumentation/dependencies.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import (
+[39;20m2025-11-10 22:59:08,092           mysql INFO     mindsdb.api.mysql.mysql_proxy.mysql_proxy: Starting MindsDB Mysql proxy server on tcp://127.0.0.1:47335[0m
+[39;20m2025-11-10 22:59:08,092           mysql INFO     mindsdb.api.mysql.mysql_proxy.mysql_proxy: Waiting for incoming connections...[0m
+[39;20m2025-11-10 22:59:08,175     MainProcess INFO     mindsdb: mysql API: started on 47335[0m
+[39;20m2025-11-10 22:59:08,716            http INFO     mindsdb.metrics.server: PROMETHEUS_MULTIPROC_DIR environment variable is not set. Metrics server won't be started.[0m
+[39;20m2025-11-10 22:59:08,718            http INFO     mindsdb.api.http.initialize:  - GUI available at http://127.0.0.1:47334/[0m
+[39;20m2025-11-10 22:59:09,177     MainProcess INFO     mindsdb: http API: started on 47334[0m
+[39;20m2025-11-10 23:26:15,420     MainProcess INFO     mindsdb: http API: stopped[0m
+[39;20m2025-11-11 15:35:56,989     MainProcess INFO     mindsdb: mysql API: stopped[0m
+make: *** [run_mindsdb] Hangup: 1

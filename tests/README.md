@@ -3,6 +3,7 @@
 Our tests are organized into several subdirectories, each focusing on different aspects of our application:
 
 * api: Contains tests related to the MindsDB's API endpoints.
+* bdd: Contains Behavior-Driven Development (BDD) tests using pytest-bdd-ng
 * integration: Contains the integration tests
 * load: Contains the load tests
 * scripts: Scripts and utilitis used for tests
@@ -73,3 +74,82 @@ Otherwise, you simply run the following command:
 ```
 pytest --cov=<code_dir> <test_dir>
 ```
+
+## BDD Testing
+
+We use Behavior-Driven Development (BDD) for all new features, providing human-readable specifications of system behavior. BDD tests complement existing unit and integration tests.
+
+### BDD Frameworks
+
+We support two BDD frameworks:
+
+1. **pytest-bdd-ng** - Integrated with pytest, located in `tests/bdd/`
+2. **Behave** - Standalone BDD framework, located in `features/`
+
+### Running BDD Tests
+
+#### pytest-bdd-ng Tests
+
+```bash
+# Run all pytest-bdd-ng tests
+make bdd_tests
+
+# Run with coverage
+make bdd_coverage
+
+# Run in debug mode
+make bdd_tests_debug
+
+# Run specific feature
+pytest tests/bdd/features/api/mysql_api.feature
+```
+
+#### Behave Tests
+
+```bash
+# Run all Behave tests
+make behave_tests
+
+# Run with specific tags
+make behave_tests_tags TAGS='@api,@mysql'
+
+# Run in debug mode
+make behave_tests_debug
+```
+
+### When to Use BDD vs Unit Tests
+
+- **BDD Tests**: Use for new features, integration scenarios, and user-facing behavior
+- **Unit Tests**: Use for testing individual functions, classes, and components
+- **Integration Tests**: Use for testing component interactions (existing tests remain unchanged)
+
+### BDD Documentation
+
+- **pytest-bdd-ng**: See [tests/bdd/README.md](bdd/README.md)
+- **Behave**: See [features/README.md](../features/README.md)
+
+### Roadmap Generation
+
+Generate a BDD-aligned roadmap from feature files and test results:
+
+```bash
+# Generate roadmap (uses test results if available)
+python scripts/generate_bdd_roadmap.py
+
+# With options
+python scripts/generate_bdd_roadmap.py --verbose --test-results-dir reports/
+```
+
+This generates `docs/BDD_ROADMAP.md` with:
+- All features and scenarios
+- Test status indicators: `[x]` passing, `[ ]` failing/not implemented, `[~]` partial, `[S]` skipped
+- Coverage statistics (passing/failing/not implemented percentages)
+- Unmapped scenarios (scenarios without corresponding tests)
+
+**Status Indicators:**
+- `[x]` - Scenario passing all tests
+- `[ ]` - Scenario failing or not implemented
+- `[~]` - Scenario partially passing (some steps failing)
+- `[S]` - Scenario skipped
+
+The roadmap automatically updates based on test execution results from `reports/pytest-bdd-report.json` and `reports/behave.json`.

@@ -22,3 +22,9 @@ walrus==0.9.3
 pymongo == 4.8.0
 pytest-json-report==1.5.0
 appdirs >= 1.0.0
+
+# BDD Testing Dependencies
+pytest-bdd-ng>=0.1.0  # Modern pytest BDD plugin with full Gherkin support
+behave>=1.2.6  # Standalone BDD framework
+behave-html-formatter>=0.1.0  # HTML reporting for Behave
+gherkin-official>=6.0.0  # Official Gherkin parser (used by pytest-bdd-ng)

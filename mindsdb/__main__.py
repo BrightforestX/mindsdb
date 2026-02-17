@@ -219,93 +219,42 @@ def do_clean_process_marks():
             set_error_model_status_by_pids(unexisting_pids)
 
 
-def create_permanent_integrations():
-    """
-    Create permanent integrations, for now only the 'files' integration.
-    NOTE: this is intentional to avoid importing integration_controller
-    """
-    integration_name = "files"
-    existing = db.session.query(db.Integration).filter_by(name=integration_name, company_id=None).first()
-    if existing is not None:
-        return
-    integration_record = db.Integration(
-        name=integration_name,
-        data={},
-        engine=integration_name,
-        company_id=None,
-    )
-    db.session.add(integration_record)
+def validate_default_project():
+    """Ensure the default project exists."""
+    from mindsdb.interfaces.database.projects import ProjectController
+    
+    project_controller = ProjectController()
+    default_project_name = config.get("default_project")
+    
     try:
-        db.session.commit()
+        project_controller.get(name=default_project_name)
     except Exception:
-        logger.exception(f"Failed to create permanent integration '{integration_name}' in the internal database.")
-        db.session.rollback()
+        # Default project doesn't exist, create it
+        try:
+            project_controller.add(name=default_project_name)
+            logger.info(f"Created default project: {default_project_name}")
+        except Exception as e:
+            logger.exception(f"Failed to create default project '{default_project_name}': {e}")
 
 
-def validate_default_project() -> None:
-    """Handle 'default_project' config option.
-    Project with the name specified in 'default_project' must exists and be marked with
-    'is_default' metadata. If it is not possible, then terminate the process with error.
-    Note: this can be done using 'project_controller', but we want to save init time and used RAM.
-    """
-    new_default_project_name = config.get("default_project")
-    logger.debug(f"Checking if default project {new_default_project_name} exists")
-    filter_company_id = ctx.company_id if ctx.company_id is not None else "0"
-
-    current_default_project: db.Project | None = db.Project.query.filter(
-        db.Project.company_id == filter_company_id,
-        db.Project.metadata_["is_default"].as_boolean() == True,  # noqa
-    ).first()
-
-    if current_default_project is None:
-        # Legacy: If the default project does not exist, mark the new one as default.
-        existing_project = db.Project.query.filter(
-            db.Project.company_id == filter_company_id,
-            func.lower(db.Project.name) == func.lower(new_default_project_name),
-        ).first()
-        if existing_project is None:
-            logger.critical(f"A project with the name '{new_default_project_name}' does not exist")
-            sys.exit(1)
-
-        existing_project.metadata_ = {"is_default": True}
-        flag_modified(existing_project, "metadata_")
-        db.session.commit()
-    elif current_default_project.name != new_default_project_name:
-        # If the default project exists, but the name is different, update the name.
-        existing_project = db.Project.query.filter(
-            db.Project.company_id == filter_company_id,
-            func.lower(db.Project.name) == func.lower(new_default_project_name),
-        ).first()
-        if existing_project is not None:
-            logger.critical(f"A project with the name '{new_default_project_name}' already exists")
-            sys.exit(1)
-        current_default_project.name = new_default_project_name
-        db.session.commit()
+def start_process(trunc_process_data: TrunkProcessData):
+    """Start a trunk process in a separate multiprocessing process."""
+    if trunc_process_data.process is not None:
+        logger.warning(f"{trunc_process_data.name} process already started")
+        return
+    
+    args = trunc_process_data.args or ()
+    trunc_process_data.process = mp.Process(
+        target=trunc_process_data.entrypoint,
+        args=args,
+        name=trunc_process_data.name,
+    )
+    trunc_process_data.process.start()
+    trunc_process_data.started = True
+    logger.info(f"Started {trunc_process_data.name} process (PID: {trunc_process_data.process.pid})")
 
 
-def start_process(trunc_process_data: TrunkProcessData) -> None:
-    """Start a process.
-
-    Args:
-        trunc_process_data (TrunkProcessData): The data of the process to start.
-    """
-    mp_ctx = mp.get_context("spawn")
-    logger.info(f"{trunc_process_data.name} API: starting...")
-    try:
-        trunc_process_data.process = mp_ctx.Process(
-            target=trunc_process_data.entrypoint,
-            args=trunc_process_data.args,
-            name=trunc_process_data.name,
-        )
-        trunc_process_data.process.start()
-    except Exception as e:
-        logger.exception(f"Failed to start '{trunc_process_data.name}' API process due to unexpected error:")
-        close_api_gracefully(trunc_processes_struct)
-        raise e
-
-
-if __name__ == "__main__":
-    mp.freeze_support()
+if __name__ == '__main__':
     # warn if less than 1Gb of free RAM
     if psutil.virtual_memory().available < (1 << 30):
         logger.warning(
@@ -425,7 +374,8 @@ if __name__ == "__main__":
         if len(unexisting_pids) > 0:
             set_error_model_status_by_pids(unexisting_pids)
         set_error_model_status_for_unfinished()
-        create_permanent_integrations()
+        from mindsdb.interfaces.database.integrations import integration_controller
+        integration_controller.create_permanent_integrations()
 
     clean_process_marks()
 

@@ -1,0 +1,32 @@
+---
+description: "Update .feature files when implementing or changing behavior that affects BDD scenarios"
+alwaysApply: true
+---
+
+# Feature File Discipline
+
+When you add, change, or remove behavior that affects BDD scenarios, **always update the relevant `.feature` files**.
+
+## Feature File Locations
+
+- `features/**/*.feature` - Main BDD features
+- `tests/bdd/features/**/*.feature` - Test-specific BDD features
+- Step definitions: Python-based step definitions for Behave
+
+## Required Actions
+
+1. **New behavior**: Add scenarios to appropriate `.feature` files
+2. **Changed behavior**: Update existing scenarios to reflect changes
+3. **Removed behavior**: Mark scenarios as deprecated or remove them
+4. **Error paths**: Add scenarios for error cases and edge conditions
+5. **Keep Gherkin consistent**: Use Given-When-Then format, clear step names
+
+## Examples
+
+- Adding a new ML model type → Add feature scenarios for model creation/prediction
+- Changing database integration → Update feature scenarios that test database operations
+- Adding new API endpoints → Add feature scenarios for API success/error cases
+
+## Integration
+
+Link scenarios to Python step definitions in Behave. Ensure pytest/Behave tests align with feature files. Test both unit and integration scenarios.

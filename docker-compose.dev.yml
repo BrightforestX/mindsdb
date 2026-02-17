@@ -1,0 +1,38 @@
+# Docker Compose override for development environment
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  mindsdb:
+    # Build locally for development
+    build:
+      context: .
+      dockerfile: docker/mindsdb.Dockerfile
+      target: dev  # Includes dev dependencies
+    environment:
+      FLASK_DEBUG: 1
+      MINDSDB_LOG_LEVEL: ${MINDSDB_LOG_LEVEL:-DEBUG}
+      SENTRY_IO_ENVIRONMENT: development
+      LANGFUSE_ENVIRONMENT: development
+      OTEL_SERVICE_ENVIRONMENT: development
+      OTEL_EXPORTER_TYPE: console  # Use console exporter for dev
+      # Enable detailed logging for development
+      OTEL_LOGGING_DISABLED: false
+      OTEL_TRACING_DISABLED: false
+    volumes:
+      # Mount source code for hot reload
+      - type: bind
+        source: .
+        target: /mindsdb
+
+  # Enable all observability services in development
+  otel-collector:
+    profiles: []  # Always run in dev
+
+  langfuse:
+    profiles: []  # Always run in dev
+    environment:
+      - LANGFUSE_DEBUG=True
+
+  # Autoheal is useful in development
+  autoheal:
+    profiles: []  # Always run in dev

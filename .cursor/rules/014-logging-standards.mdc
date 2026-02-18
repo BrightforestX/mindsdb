@@ -1,0 +1,28 @@
+---
+description: Logging standards for MindsDB - structured logs, Cloud Logging, and PII safety
+globs: ["**/*.py"]
+---
+
+# Logging Standards (014)
+
+## Structured Logs
+- Use JSON-structured logs with: `event`, `level`, `component`, `message`.
+- Prefer `mindsdb.utilities.log.getLogger(__name__)` for component names.
+- For Cloud Logging, set `record.event` when logging semantic events (e.g. `event='model_trained'`).
+
+## Log Levels
+- DEBUG: Development and debugging only.
+- INFO: Normal operations, startup, key milestones.
+- WARNING: Recoverable issues, deprecated usage.
+- ERROR: Failures that need attention.
+- CRITICAL: Unrecoverable errors.
+
+## Security
+- **Never log secrets or PII**: passwords, tokens, API keys, emails, SSNs, etc.
+- Use `extra={}` for structured metadata; sensitive keys are auto-redacted by Cloud Logging.
+- Avoid logging full request/response bodies; log IDs or hashes instead.
+
+## Cloud Logging
+- Enable via `CLOUD_LOGGING_ENABLED=true` and `FIREBASE_PROJECT_ID`.
+- Set `GOOGLE_APPLICATION_CREDENTIALS` for service account auth.
+- Logs go to Google Cloud Logging; errors appear in Cloud Error Reporting.

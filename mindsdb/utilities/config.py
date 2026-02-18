@@ -157,6 +157,10 @@ class Config:
                         "filename": "app.log",
                         "maxBytes": 1 << 19,    # 0.5 Mb
                         "backupCount": 3
+                    },
+                    "cloud": {
+                        "enabled": False,   # CLOUD_LOGGING_ENABLED, requires FIREBASE_PROJECT_ID
+                        "level": "INFO"
                     }
                 }
             },
@@ -242,7 +246,8 @@ class Config:
             'logging': {
                 'handlers': {
                     'console': {},
-                    'file': {}
+                    'file': {},
+                    'cloud': {}
                 }
             },
             "api": {
@@ -318,6 +323,13 @@ class Config:
         if os.environ.get('MINDSDB_FILE_LOG_LEVEL', '') != '':
             self._env_config['logging']['handlers']['file']['level'] = os.environ['MINDSDB_FILE_LOG_LEVEL']
             self._env_config['logging']['handlers']['file']['enabled'] = True
+        # Cloud Logging (Firebase-compatible) - FIREBASE_PROJECT_ID, GOOGLE_APPLICATION_CREDENTIALS
+        if os.environ.get('CLOUD_LOGGING_ENABLED', '').lower() in ('1', 'true', 'yes'):
+            self._env_config['logging']['handlers']['cloud']['enabled'] = True
+            if os.environ.get('CLOUD_LOGGING_LEVEL', ''):
+                self._env_config['logging']['handlers']['cloud']['level'] = os.environ['CLOUD_LOGGING_LEVEL']
+            else:
+                self._env_config['logging']['handlers']['cloud']['level'] = 'INFO'
         # endregion
 
         # region server type

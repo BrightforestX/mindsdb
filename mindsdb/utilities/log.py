@@ -62,11 +62,28 @@ def get_file_handler_config_level() -> int:
     return getattr(logging, file_handler_config["level"])
 
 
+def get_cloud_handler_config_level() -> int:
+    try:
+        cloud_handler_config = app_config.get('logging', {}).get('handlers', {}).get('cloud', {})
+        return getattr(logging, cloud_handler_config.get("level", "INFO"))
+    except (KeyError, TypeError, AttributeError):
+        return logging.INFO
+
+
 def get_mindsdb_log_level() -> int:
     console_handler_config_level = get_console_handler_config_level()
     file_handler_config_level = get_file_handler_config_level()
+    levels = [console_handler_config_level, file_handler_config_level]
 
-    return min(console_handler_config_level, file_handler_config_level)
+    # Include cloud handler level if enabled
+    try:
+        cloud_cfg = app_config.get('logging', {}).get('handlers', {}).get('cloud', {})
+        if cloud_cfg.get('enabled'):
+            levels.append(get_cloud_handler_config_level())
+    except (KeyError, TypeError, AttributeError):
+        pass
+
+    return min(levels)
 
 
 def get_handlers_config(process_name: str) -> dict:
@@ -127,6 +144,18 @@ def configure_logging(process_name: str = None):
     )
 
     dictConfig(logging_config)
+
+    # Cloud Logging (Firebase-compatible) - add handler if enabled
+    try:
+        cloud_handler_config = app_config.get('logging', {}).get('handlers', {}).get('cloud', {})
+        if cloud_handler_config.get('enabled'):
+            from mindsdb.utilities.cloud_logging import get_cloud_handler
+            cloud_handler = get_cloud_handler()
+            if cloud_handler:
+                cloud_handler.setLevel(get_cloud_handler_config_level())
+                logging.getLogger().addHandler(cloud_handler)
+    except (KeyError, TypeError, AttributeError, ImportError):
+        pass
 
 
 def initialize_logging(process_name: str = None) -> None:

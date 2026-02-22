@@ -166,11 +166,17 @@ class Config:
                         "enabled": False,
                         "level": "INFO",  # MINDSDB_FILE_LOG_LEVEL
                         "filename": "app.log",
-                        "maxBytes": 1 << 19,  # 0.5 Mb
-                        "backupCount": 3,
+                        "maxBytes": 1 << 19,    # 0.5 Mb
+                        "backupCount": 3
                     },
-                },
-                "resources_log": {"enabled": False, "level": "INFO", "interval": 60},
+                    "cloud": {
+                        "enabled": False,   # CLOUD_LOGGING_ENABLED, requires FIREBASE_PROJECT_ID
+                        "level": "INFO"
+                    }
+                }
+            },
+            "gui": {
+                "autoupdate": True
             },
             "gui": {"open_on_start": True, "autoupdate": True},
             "debug": False,
@@ -235,13 +241,22 @@ class Config:
     def prepare_env_config(self) -> None:
         """Collect config values from env vars to self._env_config"""
         self._env_config = {
-            "logging": {"handlers": {"console": {}, "file": {}}},
-            "api": {"http": {}},
-            "auth": {},
-            "paths": {},
-            "permanent_storage": {},
-            "ml_task_queue": {},
-            "gui": {},
+            'logging': {
+                'handlers': {
+                    'console': {},
+                    'file': {},
+                    'cloud': {}
+                }
+            },
+            "api": {
+                "http": {
+                    "server": {}
+                }
+            },
+            'auth': {},
+            'paths': {},
+            'permanent_storage': {},
+            'ml_task_queue': {}
         }
 
         # region storage root path
@@ -302,15 +317,22 @@ class Config:
             raise ValueError(f"Wrong value of env var MINDSDB_HTTP_AUTH_TYPE={http_auth_type}")
 
         # region logging
-        if os.environ.get("MINDSDB_LOG_LEVEL", "") != "":
-            self._env_config["logging"]["handlers"]["console"]["level"] = os.environ["MINDSDB_LOG_LEVEL"]
-            self._env_config["logging"]["handlers"]["console"]["enabled"] = True
-        if os.environ.get("MINDSDB_CONSOLE_LOG_LEVEL", "") != "":
-            self._env_config["logging"]["handlers"]["console"]["level"] = os.environ["MINDSDB_CONSOLE_LOG_LEVEL"]
-            self._env_config["logging"]["handlers"]["console"]["enabled"] = True
-        if os.environ.get("MINDSDB_FILE_LOG_LEVEL", "") != "":
-            self._env_config["logging"]["handlers"]["file"]["level"] = os.environ["MINDSDB_FILE_LOG_LEVEL"]
-            self._env_config["logging"]["handlers"]["file"]["enabled"] = True
+        if os.environ.get('MINDSDB_LOG_LEVEL', '') != '':
+            self._env_config['logging']['handlers']['console']['level'] = os.environ['MINDSDB_LOG_LEVEL']
+            self._env_config['logging']['handlers']['console']['enabled'] = True
+        if os.environ.get('MINDSDB_CONSOLE_LOG_LEVEL', '') != '':
+            self._env_config['logging']['handlers']['console']['level'] = os.environ['MINDSDB_LOG_LEVEL']
+            self._env_config['logging']['handlers']['console']['enabled'] = True
+        if os.environ.get('MINDSDB_FILE_LOG_LEVEL', '') != '':
+            self._env_config['logging']['handlers']['file']['level'] = os.environ['MINDSDB_FILE_LOG_LEVEL']
+            self._env_config['logging']['handlers']['file']['enabled'] = True
+        # Cloud Logging (Firebase-compatible) - FIREBASE_PROJECT_ID, GOOGLE_APPLICATION_CREDENTIALS
+        if os.environ.get('CLOUD_LOGGING_ENABLED', '').lower() in ('1', 'true', 'yes'):
+            self._env_config['logging']['handlers']['cloud']['enabled'] = True
+            if os.environ.get('CLOUD_LOGGING_LEVEL', ''):
+                self._env_config['logging']['handlers']['cloud']['level'] = os.environ['CLOUD_LOGGING_LEVEL']
+            else:
+                self._env_config['logging']['handlers']['cloud']['level'] = 'INFO'
         # endregion
 
         if os.environ.get("MINDSDB_DB_CON", "") != "":

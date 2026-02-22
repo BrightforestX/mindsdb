@@ -378,7 +378,6 @@ class SkillToolController:
         pred_args["llm"] = llm
 
         from .retrieval_tool import build_retrieval_tools
-
         return build_retrieval_tools(tool, pred_args, skill)
 
     def _get_rag_query_function(self, skill: db.Skills):

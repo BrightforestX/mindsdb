@@ -1,0 +1,47 @@
+# Fly.io app for BrightforestX MindsDB (data platform / lighthouse-bay connect).
+# Deploy from the repository root:
+#   fly deploy --config deploy/fly/fly.toml
+#
+# Replace `app` with your Fly app name after `fly apps create`.
+
+app = 'bfx-mindsdb-platform'
+primary_region = 'iad'
+
+[build]
+  dockerfile = 'docker/mindsdb.Dockerfile'
+  build-target = 'fly'
+
+[env]
+  MINDSDB_DOCKER_ENV = '1'
+  MINDSDB_HTTP_SERVER_TYPE = 'waitress'
+  MINDSDB_STORAGE_DIR = '/data/mdb_storage'
+
+[mounts]
+  source = 'mdb_storage'
+  destination = '/data'
+  initial_size = '1gb'
+
+[http_service]
+  internal_port = 47334
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+  [http_service.concurrency]
+    type = 'requests'
+    soft_limit = 25
+    hard_limit = 50
+
+  [[http_service.checks]]
+    grace_period = '120s'
+    interval = '30s'
+    method = 'GET'
+    path = '/api/util/ping'
+    timeout = '5s'
+
+[[vm]]
+  memory = '2gb'
+  cpu_kind = 'shared'
+  cpus = 2

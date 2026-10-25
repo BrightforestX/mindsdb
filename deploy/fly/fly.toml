@@ -4,7 +4,7 @@
 #
 # Replace `app` with your Fly app name after `fly apps create`.
 
-app = 'bfx-mindsdb-platform'
+app = 'mindsdb-lighthouse-bay'
 primary_region = 'iad'
 
 [build]

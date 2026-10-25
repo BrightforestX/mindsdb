@@ -18,16 +18,16 @@ From the **repository root**:
 
 ```bash
 # 1) Create the app (pick a globally unique name; update deploy/fly/fly.toml `app` to match)
-fly apps create bfx-mindsdb-platform --org <your-org>
+fly apps create mindsdb-lighthouse-bay --org <your-org>
 
 # 2) Volume for MindsDB metadata/models (one volume per app in iad)
-fly volumes create mdb_storage --region iad --size 1 --app bfx-mindsdb-platform
+fly volumes create mdb_storage --region iad --size 1 --app mindsdb-lighthouse-bay
 
 # 3) Required secrets (customer-facing: always enable HTTP auth)
 fly secrets set \
   MINDSDB_USERNAME='<service-user>' \
   MINDSDB_PASSWORD='<strong-password>' \
-  --app bfx-mindsdb-platform
+  --app mindsdb-lighthouse-bay
 ```
 
 ### Optional secrets
@@ -42,13 +42,13 @@ fly secrets set \
 Example optional Postgres:
 
 ```bash
-fly secrets set MINDSDB_DB_CON='postgresql://user:pass@host:5432/mindsdb' --app bfx-mindsdb-platform
+fly secrets set MINDSDB_DB_CON='postgresql://user:pass@host:5432/mindsdb' --app mindsdb-lighthouse-bay
 ```
 
 Attach Fly Postgres if you use it:
 
 ```bash
-fly postgres attach --app bfx-mindsdb-platform <postgres-app-name>
+fly postgres attach --app mindsdb-lighthouse-bay <postgres-app-name>
 # Then set MINDSDB_DB_CON from the generated DATABASE_URL if needed
 ```
 
@@ -57,13 +57,13 @@ fly postgres attach --app bfx-mindsdb-platform <postgres-app-name>
 From the **repository root** (build context must be the repo root):
 
 ```bash
-fly deploy --config deploy/fly/fly.toml --app bfx-mindsdb-platform
+fly deploy --config deploy/fly/fly.toml --app mindsdb-lighthouse-bay
 ```
 
 Verify:
 
 ```bash
-curl -fsS "https://bfx-mindsdb-platform.fly.dev/api/util/ping"
+curl -fsS "https://mindsdb-lighthouse-bay.fly.dev/api/util/ping"
 # {"status":"ok"}
 ```
 
@@ -71,7 +71,7 @@ With HTTP auth enabled (after secrets are set):
 
 ```bash
 curl -fsS -u "$MINDSDB_USERNAME:$MINDSDB_PASSWORD" \
-  "https://bfx-mindsdb-platform.fly.dev/api/util/ping"
+  "https://mindsdb-lighthouse-bay.fly.dev/api/util/ping"
 ```
 
 ## Public URL shape (lighthouse-bay `/connect`)
@@ -90,7 +90,7 @@ Example connect configuration (shape only — store credentials in lighthouse-ba
 ```json
 {
   "adapter": "mindsdb",
-  "baseUrl": "https://bfx-mindsdb-platform.fly.dev",
+  "baseUrl": "https://mindsdb-lighthouse-bay.fly.dev",
   "username": "<from MINDSDB_USERNAME secret>",
   "password": "<from MINDSDB_PASSWORD secret>"
 }
@@ -102,7 +102,7 @@ Example query from lighthouse-bay or a worker:
 curl -fsS -u "$MINDSDB_USERNAME:$MINDSDB_PASSWORD" \
   -H 'Content-Type: application/json' \
   -d '{"query":"SHOW DATABASES;"}' \
-  "https://bfx-mindsdb-platform.fly.dev/api/sql/query"
+  "https://mindsdb-lighthouse-bay.fly.dev/api/sql/query"
 ```
 
 **Cold starts:** With scale-to-zero, the first request after idle may wait while Fly starts a machine. Retries with backoff in the adapter are sufficient; route wake traffic for *other* stack services through ontology-stack’s existing wake proxy, not a second proxy in this repo.
@@ -120,10 +120,10 @@ Fly Proxy stops idle machines after a few minutes of low traffic; there is no se
 ## Operations
 
 ```bash
-fly status --app bfx-mindsdb-platform
-fly logs --app bfx-mindsdb-platform
-fly ssh console --app bfx-mindsdb-platform
-fly scale count 1 --app bfx-mindsdb-platform   # single machine recommended with one volume
+fly status --app mindsdb-lighthouse-bay
+fly logs --app mindsdb-lighthouse-bay
+fly ssh console --app mindsdb-lighthouse-bay
+fly scale count 1 --app mindsdb-lighthouse-bay   # single machine recommended with one volume
 ```
 
 ## Local image smoke test (optional)

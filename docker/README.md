@@ -3,6 +3,11 @@
 * https://docs.mindsdb.com/setup/self-hosted/docker/
 * https://hub.docker.com/u/mindsdb
 
+### Fly.io (BrightforestX)
+
+Production Fly deploy config (region `iad`, scale-to-zero): see [`deploy/fly/README.md`](../deploy/fly/README.md).
+Build target: `docker/mindsdb.Dockerfile` → stage `fly`.
+
 ## Building
 
 Docker images are using only released versions of MindsDB from

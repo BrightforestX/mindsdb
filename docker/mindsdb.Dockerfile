@@ -114,6 +114,36 @@ EXPOSE 47336/tcp
 ENTRYPOINT [ "bash", "-c", "watchfiles --filter python 'python -Im mindsdb --config=/root/mindsdb_config.json --api=http'" ]
 
 
+# Production image for Fly.io (HTTP API, persistent storage on /data).
+FROM extras AS fly
+WORKDIR /mindsdb
+
+RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
+RUN --mount=target=/var/lib/apt,type=cache,sharing=locked \
+    --mount=target=/var/cache/apt,type=cache,sharing=locked \
+    apt update -qy \
+    && apt-get install -qy \
+    -o APT::Install-Recommends=false \
+    -o APT::Install-Suggests=false \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY deploy/fly/mindsdb_config.fly.json /root/mindsdb_config.json
+
+ENV PYTHONUNBUFFERED=1 \
+    MINDSDB_DOCKER_ENV=1 \
+    MINDSDB_STORAGE_DIR=/data/mdb_storage \
+    MINDSDB_HTTP_SERVER_TYPE=waitress \
+    VIRTUAL_ENV=/venv \
+    PATH=/venv/bin:$PATH
+
+EXPOSE 47334/tcp
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 \
+    CMD curl -fsS http://127.0.0.1:47334/api/util/ping || exit 1
+
+ENTRYPOINT ["python", "-Im", "mindsdb", "--config=/root/mindsdb_config.json", "--api=http", "--no_studio"]
+
 
 # Make sure the regular image is the default
 FROM extras
